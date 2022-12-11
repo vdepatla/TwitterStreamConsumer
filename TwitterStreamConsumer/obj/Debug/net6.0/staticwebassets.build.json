@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "JkWlcNuBouXnrVkS6/syRNv1CwKTRQC/KKxiHbBSDU8=",
+  "Source": "TwitterStreamConsumer",
+  "BasePath": "_content/TwitterStreamConsumer",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
