@@ -40,3 +40,12 @@ C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Tw
 C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Tweetinvi.Streams.dll
 C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Tweetinvi.WebLogic.dll
 C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Tweetinvi.dll
+C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll
+C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
+C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\obj\Debug\net6.0\TwitterStreamConsumer.csproj.ResolveComReference.cache

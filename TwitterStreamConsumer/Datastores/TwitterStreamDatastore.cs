@@ -4,7 +4,7 @@ namespace TwitterStreamConsumer.Datastores
 {
     public sealed class TwitterStreamDatastore : ITwitterStreamDataStore
     {
-        private List<Tweet> tweets;
+        private List<Tweet>? tweets;
 
         public  bool AddTweet(Tweetinvi.Models.V2.TweetV2 tweet)
         {

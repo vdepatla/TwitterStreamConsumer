@@ -1,6 +1,6 @@
 ﻿namespace TwitterStreamConsumer.Models
 {
-    public class TwitterAPIKeys
+    public class TwitterClientConfig
     {
         public string ConsumerKey { get; set; }
         public string ConsumerSecret { get; set; }

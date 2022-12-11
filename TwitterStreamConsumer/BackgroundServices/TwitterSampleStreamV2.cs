@@ -1,7 +1,6 @@
 ﻿using Tweetinvi;
-using Tweetinvi.Core.Models;
 using Tweetinvi.Exceptions;
-using Tweetinvi.Models;
+using TwitterStreamConsumer.Controllers;
 using TwitterStreamConsumer.Datastores;
 
 namespace TwitterStreamConsumer.BackgroundServices
@@ -9,26 +8,23 @@ namespace TwitterStreamConsumer.BackgroundServices
     public  class TwitterSampleStreamV2 : BackgroundService
     {
         private readonly ITwitterStreamDataStore _twitterStreamDataStore;
+        private readonly ITwitterClient _twitterClient;
+        private readonly ILogger<TwitterSampleStreamV2> _logger;
 
-        public TwitterSampleStreamV2(ITwitterStreamDataStore twitterStreamDataStore)
+        public TwitterSampleStreamV2(ITwitterStreamDataStore twitterStreamDataStore, ITwitterClient twitterClient, ILogger<TwitterSampleStreamV2> logger)
         {
             _twitterStreamDataStore = twitterStreamDataStore;
+            _twitterClient = twitterClient;
+            _logger = logger;
         }
+
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 {
-                    var appCredentials = new ConsumerOnlyCredentials("MOaqzlpjn2wCmMKpw0h6YjSn7", "3tD3I6KScbmpQhwVMdZTqhp3V0TGqN5Y8anXdzjc2l2HwcwD9a")
-                    {
-                        BearerToken = "AAAAAAAAAAAAAAAAAAAAAMUkkAEAAAAA5NOefwkeLBkfm43RbtPz8eViCVg%3Dd54XYvlVyM34umlFd3Wy1OjAE5ATLFsudKJKuUIphegSSDh57K"
-
-                    };
-
-                    var appClient = new TwitterClient(appCredentials);
-
-                    var sampleStreamV2 = appClient.StreamsV2.CreateSampleStream();
+                    var sampleStreamV2 = _twitterClient.StreamsV2.CreateSampleStream();
                     sampleStreamV2.TweetReceived += (sender, args) =>
                     {
                         _twitterStreamDataStore.AddTweet(args.Tweet);
@@ -39,11 +35,13 @@ namespace TwitterStreamConsumer.BackgroundServices
                 }
                 catch (TwitterException tex)
                 {
-                    Console.WriteLine(tex.ToString());
+                    _logger.LogError("Twitter exception occurred when starting stream. Exception: {tex}", tex);
+                    throw;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    _logger.LogError("Twitter exception occurred when starting stream. Exception: {tex}", ex);
+                    throw;
                 }
             }
         }

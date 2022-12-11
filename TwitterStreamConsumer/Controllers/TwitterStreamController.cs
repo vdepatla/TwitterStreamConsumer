@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Mvc;
 using TwitterStreamConsumer.Datastores;
 
@@ -8,31 +9,72 @@ namespace TwitterStreamConsumer.Controllers
     public class TwitterStreamController : ControllerBase
     {
         private readonly ITwitterStreamDataStore _twitterStreamDataStore;
+        private readonly ILogger<TwitterStreamController> _logger;
 
-        public TwitterStreamController(ITwitterStreamDataStore twitterStreamDataStore)
+        public TwitterStreamController(ITwitterStreamDataStore twitterStreamDataStore, ILogger<TwitterStreamController> logger)
         {
             _twitterStreamDataStore = twitterStreamDataStore;
+            _logger = logger;
         }
-
 
         [Route("TweetCount")]
         [HttpGet]
-        public int GetTweetCount()
+        public ActionResult<int> GetTweetCount()
         {
-           return _twitterStreamDataStore.GetTweets().Count;
+            int tweetCount = 0;
+
+            try
+            {
+                var tweets = _twitterStreamDataStore.GetTweets();
+                if(tweets != null)
+                {
+                    tweetCount = tweets.Count;
+                }
+                else
+                {
+                    _logger.LogInformation("No tweets received from data store.");
+                }
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError("An error occurred in getting tweet informtion. Exception: {ex}", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }                
+
+            return Ok(tweetCount);
+
         }
 
         [Route("Top10HashTags")]
         [HttpGet]
-        public IEnumerable<string> GetTop10HashTags()
+        public ActionResult<IEnumerable<string>> GetTop10HashTags()
         {
-            var tweets = _twitterStreamDataStore.GetTweets();
-            var hashTags = tweets.Where(t => t.Hashtags != null).SelectMany(t => t.Hashtags);
+            IEnumerable<string>? result = null;
 
-            var groupedHashTags = hashTags.GroupBy(h => h);
-            var orderedHashTags = groupedHashTags.OrderByDescending(h => h.Count()).Select(t => t.Key);
+            try
+            {
+                var tweets = _twitterStreamDataStore.GetTweets();
+                var hashTags = tweets.Where(t => t.Hashtags != null).SelectMany(t => t.Hashtags);
 
-            return orderedHashTags.Take(10);
+                if(hashTags != null)
+                {
+                    var groupedHashTags = hashTags.GroupBy(h => h);
+                    var orderedHashTags = groupedHashTags.OrderByDescending(h => h.Count()).Select(t => t.Key);
+
+                    result = orderedHashTags.Take(10);
+                }
+                else
+                {
+                    _logger.LogInformation("No hash tags received from data store.");
+                }
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError("An error occurred in getting hash tag informtion. Exception: {ex}", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return Ok(result);
         }
     }
 }
