@@ -55,6 +55,10 @@
             "TweetinviAPI": {
               "target": "Package",
               "version": "[5.0.4, )"
+            },
+            "moq": {
+              "target": "Package",
+              "version": "[4.18.3, )"
             }
           },
           "imports": [

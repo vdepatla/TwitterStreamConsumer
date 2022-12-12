@@ -54,18 +54,24 @@ namespace TwitterStreamConsumer.Controllers
             try
             {
                 var tweets = _twitterStreamDataStore.GetTweets();
+
+                if(tweets == null)
+                {
+                    _logger.LogInformation("No tweets received from data store.");
+                    return Ok(result);
+                }
+
                 var hashTags = tweets.Where(t => t.Hashtags != null).SelectMany(t => t.Hashtags);
 
                 if(hashTags != null)
                 {
                     var groupedHashTags = hashTags.GroupBy(h => h);
-                    var orderedHashTags = groupedHashTags.OrderByDescending(h => h.Count()).Select(t => t.Key);
-
-                    result = orderedHashTags.Take(10);
+                    result = groupedHashTags.OrderByDescending(h => h.Count()).Take(10).Select(t => t.Key);
                 }
                 else
                 {
                     _logger.LogInformation("No hash tags received from data store.");
+                    return Ok(result);
                 }
             }
             catch(Exception ex)

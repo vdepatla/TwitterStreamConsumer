@@ -49,3 +49,5 @@ C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Mi
 C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
 C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
 C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\obj\Debug\net6.0\TwitterStreamConsumer.csproj.ResolveComReference.cache
+C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Castle.Core.dll
+C:\Veda\Projects\TwitterStreamConsumer\TwitterStreamConsumer\bin\Debug\net6.0\Moq.dll

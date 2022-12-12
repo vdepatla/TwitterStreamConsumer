@@ -13,7 +13,7 @@ namespace TwitterStreamConsumer.Datastores
                 tweets = new List<Tweet>();
             }
 
-            if (tweet.Lang == "en")
+            if (tweet.Lang.Contains("en"))
             {
                 var hashTags = (tweet.Entities.Hashtags != null) ? tweet.Entities.Hashtags.Select(h => h.Tag).ToList() : null;
                 this.tweets.Add(new Tweet(tweet.Id, tweet.Text, tweet.AuthorId, hashTags));
@@ -22,7 +22,7 @@ namespace TwitterStreamConsumer.Datastores
             return true;
         }
 
-        public  List<TwitterStreamConsumer.Models.Tweet> GetTweets()
+        public  List<TwitterStreamConsumer.Models.Tweet>? GetTweets()
         {
             return tweets;
         }

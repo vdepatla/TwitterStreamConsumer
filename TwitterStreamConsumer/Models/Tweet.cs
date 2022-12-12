@@ -7,9 +7,9 @@
 
         public string Text { get; set; }
 
-        public List<string> Hashtags { get; set; }
+        public List<string>? Hashtags { get; set; }
 
-        public Tweet(string id, string authorId, string text, List<string> hashtags)
+        public Tweet(string id, string authorId, string text, List<string>? hashtags=null)
         {
             Id = id;
             AuthorId = authorId;
