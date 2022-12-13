@@ -51,11 +51,11 @@ namespace TwitterStreamConsumer.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> GetTop10HashTags()
         {
-            IEnumerable<string>? result = null;
+            IEnumerable<string>? result = null;         
 
             try
             {
-                var tweets = _twitterStreamDataStore.GetTweets();
+               var tweets = _twitterStreamDataStore.GetTweets();
 
                 if(tweets == null)
                 {
@@ -68,7 +68,8 @@ namespace TwitterStreamConsumer.Controllers
                 if(hashTags != null)
                 {
                     var groupedHashTags = hashTags.GroupBy(h => h);
-                    result = groupedHashTags.OrderByDescending(h => h.Count()).Take(_topHashTagsCount).Select(t => t.Key); 
+                    var orderedHashTags = groupedHashTags.OrderByDescending(h => h.Count()).Select(t => t.Key);
+                    result = orderedHashTags.Take(_topHashTagsCount).ToList();
                 }
                 else
                 {
@@ -77,7 +78,7 @@ namespace TwitterStreamConsumer.Controllers
                 }
             }
             catch(Exception ex)
-            {
+            { 
                 _logger.LogError("An error occurred in getting hash tag informtion. Exception: {ex}", ex);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }

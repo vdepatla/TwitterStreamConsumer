@@ -1,17 +1,16 @@
-﻿using System.Collections.Concurrent;
-using TwitterStreamConsumer.Models;
+﻿using TwitterStreamConsumer.Models;
 
 namespace TwitterStreamConsumer.Datastores
 {
     public sealed class TwitterStreamDatastore : ITwitterStreamDataStore
     {
-        private ConcurrentBag<Tweet>? tweets;
+        private SynchronizedCollection<Tweet>? tweets;
 
         public  bool AddTweet(Tweetinvi.Models.V2.TweetV2 tweet)
         {
             if(tweets == null)
             {
-                tweets = new ConcurrentBag<Tweet>();
+                tweets = new SynchronizedCollection<Tweet>();
             }
 
             if (tweet.Lang == "en")
@@ -23,9 +22,9 @@ namespace TwitterStreamConsumer.Datastores
             return true;
         }
 
-        public  List<TwitterStreamConsumer.Models.Tweet>? GetTweets()
+        public SynchronizedCollection<TwitterStreamConsumer.Models.Tweet>? GetTweets()
         {
-            return tweets?.ToList();
+            return tweets;
         }
     }
 }

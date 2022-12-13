@@ -21,11 +21,11 @@ namespace TwitterStreamConsumerTests
         }
 
 
-        private readonly List<Tweet> mockTweets = new List<Tweet>(){
+        private readonly SynchronizedCollection<Tweet> mockTweets = new SynchronizedCollection<Tweet>(){
             new Tweet("mockId1", "mockAuthor1", "unit test tweet1", null),
             new Tweet("mockId2", "mockAuthor2", "unit test tweet2", null)};
 
-        private readonly List<Tweet> mockTweetsWithLessThan10RepeatedHashTags = new List<Tweet>(){
+        private readonly SynchronizedCollection<Tweet> mockTweetsWithLessThan10RepeatedHashTags = new SynchronizedCollection<Tweet>(){
             new Tweet("mockId1", "mockAuthor1", "unit test tweet1", new List<string>() { "#a", "#ab" }),
             new Tweet("mockId2", "mockAuthor2", "unit test tweet2", new List<string>() { "#abc", "#abcd" }),
             new Tweet("mockId3", "mockAuthor3", "unit test tweet3", new List<string>() { "#abcde", "#abcdef" }),
@@ -35,7 +35,7 @@ namespace TwitterStreamConsumerTests
             new Tweet("mockId7", "mockAuthor7", "unit test tweet7", new List<string>() { "#abc", "#abcd" })
         };
 
-        private readonly List<Tweet> mockTweetsWithGreaterThan10RepeatedHashTags = new List<Tweet>(){
+        private readonly SynchronizedCollection<Tweet> mockTweetsWithGreaterThan10RepeatedHashTags = new SynchronizedCollection<Tweet>(){
             new Tweet("mockId1", "mockAuthor1", "unit test tweet1", new List<string>() { "#a", "#ab" }),
             new Tweet("mockId2", "mockAuthor2", "unit test tweet2", new List<string>() { "#abc", "#abcd" }),
             new Tweet("mockId3", "mockAuthor3", "unit test tweet3", new List<string>() { "#a", "#ab" }),
@@ -54,25 +54,23 @@ namespace TwitterStreamConsumerTests
             new Tweet("mockId6", "mockAuthor6", "unit test tweet6", new List<string>() { "#abcdefghil", "#abcdefghijklmno" }),
         };
 
-        private readonly List<Tweet> lessThan10MockTweets = new List<Tweet>(){
+        private readonly SynchronizedCollection<Tweet> lessThan10MockTweets = new SynchronizedCollection<Tweet>(){
             new Tweet("mockId1", "mockAuthor1", "unit test tweet1", new List<string>() { "#a", "#ab" }),
             new Tweet("mockId2", "mockAuthor2", "unit test tweet2", new List<string>() { "#abc", "#abcd" }),
             new Tweet("mockId3", "mockAuthor3", "unit test tweet3", new List<string>() { "#a", "#ab" })
         };
 
-        private readonly List<Tweet> mockTweetsWithNoRepeatedHashTags = new List<Tweet>(){
+        private readonly SynchronizedCollection<Tweet> mockTweetsWithNoRepeatedHashTags = new SynchronizedCollection<Tweet>(){
             new Tweet("mockId1", "mockAuthor1", "unit test tweet1", new List<string>() { "#a", "#ab" }),
             new Tweet("mockId2", "mockAuthor2", "unit test tweet2", new List<string>() { "#abc", "#abcd" }),
             new Tweet("mockId3", "mockAuthor3", "unit test tweet3", new List<string>() { "#abcde", "#abcdef" })
         };
 
-        public List<Tweet> MockTweets => mockTweets;
-
         [Fact]
         public void GetTweetCountReturnsOKWithCorrectCount()
         {
             //Arrange
-            mockDataStore.Setup(m => m.GetTweets()).Returns(MockTweets);
+            mockDataStore.Setup(m => m.GetTweets()).Returns(mockTweets);
 
             //Act
             var result = controller.GetTweetCount();
