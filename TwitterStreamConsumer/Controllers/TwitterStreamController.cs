@@ -10,14 +10,16 @@ namespace TwitterStreamConsumer.Controllers
     {
         private readonly ITwitterStreamDataStore _twitterStreamDataStore;
         private readonly ILogger<TwitterStreamController> _logger;
+        private readonly int _topHashTagsCount;
 
-        public TwitterStreamController(ITwitterStreamDataStore twitterStreamDataStore, ILogger<TwitterStreamController> logger)
+        public TwitterStreamController(ITwitterStreamDataStore twitterStreamDataStore, ILogger<TwitterStreamController> logger, int topHashTagsCount=10)
         {
             _twitterStreamDataStore = twitterStreamDataStore;
             _logger = logger;
+            _topHashTagsCount = topHashTagsCount;
         }
 
-        [Route("TweetCount")]
+        [Route("tweetcount")]
         [HttpGet]
         public ActionResult<int> GetTweetCount()
         {
@@ -45,7 +47,7 @@ namespace TwitterStreamConsumer.Controllers
 
         }
 
-        [Route("Top10HashTags")]
+        [Route("top10hashtags")]
         [HttpGet]
         public ActionResult<IEnumerable<string>> GetTop10HashTags()
         {
@@ -66,7 +68,7 @@ namespace TwitterStreamConsumer.Controllers
                 if(hashTags != null)
                 {
                     var groupedHashTags = hashTags.GroupBy(h => h);
-                    result = groupedHashTags.OrderByDescending(h => h.Count()).Take(10).Select(t => t.Key);
+                    result = groupedHashTags.OrderByDescending(h => h.Count()).Take(_topHashTagsCount).Select(t => t.Key); 
                 }
                 else
                 {

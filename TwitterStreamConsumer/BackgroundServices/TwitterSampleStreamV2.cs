@@ -1,6 +1,5 @@
 ﻿using Tweetinvi;
 using Tweetinvi.Exceptions;
-using TwitterStreamConsumer.Controllers;
 using TwitterStreamConsumer.Datastores;
 
 namespace TwitterStreamConsumer.BackgroundServices
@@ -31,7 +30,6 @@ namespace TwitterStreamConsumer.BackgroundServices
 
                     };
                     await sampleStreamV2.StartAsync();
-
                 }
                 catch (TwitterException tex)
                 {
