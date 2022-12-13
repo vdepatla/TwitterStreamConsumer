@@ -1,9 +1,11 @@
 ﻿
+using System.Collections.Concurrent;
+
 namespace TwitterStreamConsumer.Datastores
 {
     public interface ITwitterStreamDataStore
     {
         bool AddTweet(Tweetinvi.Models.V2.TweetV2 tweet);
-        SynchronizedCollection<TwitterStreamConsumer.Models.Tweet>? GetTweets();
+        ConcurrentBag<TwitterStreamConsumer.Models.Tweet>? GetTweets();
     }
 }

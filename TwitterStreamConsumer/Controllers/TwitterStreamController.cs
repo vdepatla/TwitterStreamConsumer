@@ -49,15 +49,14 @@ namespace TwitterStreamConsumer.Controllers
 
         [Route("top10hashtags")]
         [HttpGet]
-        public ActionResult<IEnumerable<string>> GetTop10HashTags()
+        public ActionResult<List<string>> GetTop10HashTags()
         {
-            IEnumerable<string>? result = null;         
+            List<string>? result = null;
 
             try
             {
-               var tweets = _twitterStreamDataStore.GetTweets();
-
-                if(tweets == null)
+                var tweets = _twitterStreamDataStore.GetTweets();
+                if (tweets == null)
                 {
                     _logger.LogInformation("No tweets received from data store.");
                     return Ok(result);
@@ -70,6 +69,7 @@ namespace TwitterStreamConsumer.Controllers
                     var groupedHashTags = hashTags.GroupBy(h => h);
                     var orderedHashTags = groupedHashTags.OrderByDescending(h => h.Count()).Select(t => t.Key);
                     result = orderedHashTags.Take(_topHashTagsCount).ToList();
+
                 }
                 else
                 {
@@ -78,7 +78,7 @@ namespace TwitterStreamConsumer.Controllers
                 }
             }
             catch(Exception ex)
-            { 
+            {
                 _logger.LogError("An error occurred in getting hash tag informtion. Exception: {ex}", ex);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
